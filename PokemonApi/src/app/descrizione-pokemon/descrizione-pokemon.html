@@ -1,0 +1,18 @@
+<button type="button" (click)="RequestPokemonDescription()">Carica informazioni Pokémon</button>
+
+@if (loading){
+  <div>Loading descrizione...</div>
+}
+
+@if (data != null){
+  <h2>{{ data.name }}</h2>
+  <img src="{{ data.sprites?.front_default }}" alt="{{ data.name }}" />
+  <p>Livello: {{ data.base_experience || 1 }}</p>
+  <p>Tipo:
+    @for (tipo of data.types; track tipo.type.name){
+      {{ tipo.type.name }}
+    }
+  </p>
+} @else {
+  <p>Premi il bottone per caricare le informazioni del Pokémon {{ nome }}.</p>
+}

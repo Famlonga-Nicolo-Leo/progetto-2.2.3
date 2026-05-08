@@ -1,0 +1,19 @@
+<button type="button" (click)="RequestPokemonByType()">Mostra i nomi dei Pokémon</button>
+
+@if (loading){
+  <div>Loading...</div>
+}
+
+@if (data != null){
+  <h2>Pokémon di tipo {{ tipo }}</h2>
+  <p>Numero di Pokémon: {{ data.pokemon.length }}</p>
+  <ul>
+    @for (pokemon of data.pokemon; track pokemon.pokemon.name){
+      <li>
+        <a [routerLink]="['/descrizione-pokemon', pokemon.pokemon.name]">{{ pokemon.pokemon.name }}</a>
+      </li>
+    }
+  </ul>
+} @else {
+  <p>Premi il bottone per mostrare i nomi dei Pokémon di tipo {{ tipo }}.</p>
+}
