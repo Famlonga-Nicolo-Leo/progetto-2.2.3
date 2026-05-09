@@ -1,12 +1,32 @@
-<button type="button" (click)="RequestType()">Mostra tipi pokemon</button>
+<div class="container">
+  <h1>🌟 Pokédex - Tipi Pokémon</h1>
 
-@if (loading){
-    <div>loading...</div>
-}
-<div>
-    @if (data != null && data.results){
-    @for (pokemon of data.results.slice(0,3); track pokemon.name){
-    <a [routerLink]="['/nomi-pokemon', pokemon.name]" style="text-decoration: none; color: inherit; display: block;">{{pokemon.name}}</a>
+  <div class="card">
+    <button type="button" class="btn" (click)="RequestType()">
+      <span class="loading" *ngIf="loading"></span>
+      Mostra Tipi Pokémon
+    </button>
+
+    @if (loading) {
+      <div class="loading-container">
+        <div class="loading-text">
+          <div class="spinner"></div>
+          Caricamento tipi Pokémon...
+        </div>
+      </div>
     }
-}
+
+    @if (data != null && data.results) {
+      <div class="pokemon-list-container">
+        @for (pokemon of data.results.slice(0,3); track pokemon.name) {
+          <div class="pokemon-type-card">
+            <h3 class="pokemon-type-name">{{ pokemon.name }}</h3>
+            <a class="pokemon-type-link" [routerLink]="['/nomi-pokemon', pokemon.name]">
+              Vedi Pokémon di questo tipo →
+            </a>
+          </div>
+        }
+      </div>
+    }
+  </div>
 </div>

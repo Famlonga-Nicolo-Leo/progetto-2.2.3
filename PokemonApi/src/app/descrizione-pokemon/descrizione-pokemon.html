@@ -1,18 +1,64 @@
-<button type="button" (click)="RequestPokemonDescription()">Carica informazioni Pokémon</button>
+<div class="container">
+  <h2>⭐ {{ nome }}</h2>
 
-@if (loading){
-  <div>Loading descrizione...</div>
-}
+  <div class="card">
+    <button type="button" class="btn" (click)="RequestPokemonDescription()">
+      <span class="loading" *ngIf="loading"></span>
+      Carica Dettagli Pokémon
+    </button>
 
-@if (data != null){
-  <h2>{{ data.name }}</h2>
-  <img src="{{ data.sprites.front_default }}" alt="{{ data.name }}" />
-  <p>Livello: {{ data.base_experience || 1 }}</p>
-  <p>Tipo:
-    @for (tipo of data.types; track tipo.type.name){
-      {{ tipo.type.name }}
+    @if (loading) {
+      <div class="loading-container">
+        <div class="loading-text">
+          <div class="spinner"></div>
+          Caricamento dettagli...
+        </div>
+      </div>
     }
-  </p>
-} @else {
-  <p>Premi il bottone per caricare le informazioni del Pokémon {{ nome }}.</p>
-}
+
+    @if (data != null) {
+      <div class="pokemon-info">
+        <img [src]="data.sprites.front_default" alt="{{ data.name }}" class="pokemon-image" />
+
+        <div class="pokemon-stats">
+          <div class="stat-row">
+            <span class="stat-label">Nome</span>
+            <span class="stat-value">{{ data.name }}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">ID Pokédex</span>
+            <span class="stat-value">#{{ data.id }}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Livello Base</span>
+            <span class="stat-value">{{ data.base_experience }}</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Altezza</span>
+            <span class="stat-value">{{ data.height / 10 }} m</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Peso</span>
+            <span class="stat-value">{{ data.weight / 10 }} kg</span>
+          </div>
+        </div>
+
+        <div class="types-container">
+          <h3 class="types-title">🏷️ Tipi</h3>
+          <div class="type-badges">
+            @for (tipo of data.types; track tipo.type.name) {
+              <span class="type-badge type-{{ tipo.type.name }}">
+                {{ tipo.type.name }}
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <h3>🔍 Pronto per scoprire!</h3>
+        <p>Clicca il bottone per vedere tutti i dettagli di {{ nome }}</p>
+      </div>
+    }
+  </div>
+</div>
