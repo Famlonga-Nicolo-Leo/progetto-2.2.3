@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NomiPokemon } from '../models/models';
 
 @Component({
   selector: 'app-nomi-pokemon',
@@ -10,9 +11,9 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   templateUrl: './nomi-pokemon.html',
   styleUrl: './nomi-pokemon.css',
 })
-export class NomiPokemon {
-  data: any;
-  o!: Observable<object>;
+export class NomiPokemonComponent {
+  data!: NomiPokemon;
+  o!: Observable<NomiPokemon>;
   loading: boolean = false;
   tipo = '';
 
@@ -24,7 +25,7 @@ export class NomiPokemon {
   RequestPokemonByType(): void {
     this.loading = true;
     console.log('Facendo richiesta per tipo:', this.tipo);
-    this.o = this.http.get(`https://pokeapi.co/api/v2/type/${this.tipo}`);
+    this.o = this.http.get<NomiPokemon>(`https://pokeapi.co/api/v2/type/${this.tipo}`);
     this.o.subscribe({
       next: this.GetPokemon,
       error: (err) => {
@@ -34,7 +35,7 @@ export class NomiPokemon {
     });
   }
 
-  GetPokemon = (d: any) => {
+  GetPokemon = (d: NomiPokemon) => {
     console.log('Dati ricevuti:', d);
     this.loading = false;
     this.data = d;

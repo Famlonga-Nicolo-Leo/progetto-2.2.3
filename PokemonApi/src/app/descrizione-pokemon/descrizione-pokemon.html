@@ -6,7 +6,7 @@
 
 @if (data != null){
   <h2>{{ data.name }}</h2>
-  <img src="{{ data.sprites?.front_default }}" alt="{{ data.name }}" />
+  <img src="{{ data.sprites.front_default }}" alt="{{ data.name }}" />
   <p>Livello: {{ data.base_experience || 1 }}</p>
   <p>Tipo:
     @for (tipo of data.types; track tipo.type.name){

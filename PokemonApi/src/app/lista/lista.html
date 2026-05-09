@@ -1,13 +1,12 @@
-
 <button type="button" (click)="RequestType()">Mostra tipi pokemon</button>
 
 @if (loading){
     <div>loading...</div>
 }
 <div>
-    @if (data != null){
-    @for (i of data.results.slice(0,3); track i.name){
-    <a [routerLink]="['/nomi-pokemon', i.name]" style="text-decoration: none; color: inherit; display: block;">{{i.name}}</a>
+    @if (data != null && data.results){
+    @for (pokemon of data.results.slice(0,3); track pokemon.name){
+    <a [routerLink]="['/nomi-pokemon', pokemon.name]" style="text-decoration: none; color: inherit; display: block;">{{pokemon.name}}</a>
     }
 }
 </div>
